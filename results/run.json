@@ -1,0 +1,39 @@
+{
+  "rows_out": {
+    "accounts": 3000,
+    "branches": 40,
+    "complaints": 300,
+    "customers": 2000,
+    "transactions": 20000
+  },
+  "stats": {
+    "branch.rows_in": 40,
+    "complaints.customer_id.normalised": 300,
+    "complaints.rows_in": 300,
+    "complaints.severity.normalised": 203,
+    "core.account_no.normalised": 649,
+    "core.balance_cents.thousands_separators": 2772,
+    "core.customer_id.normalised": 600,
+    "core.opened_on.day_first_dates": 890,
+    "core.rows_in": 3000,
+    "crm.customer_id.normalised": 2100,
+    "crm.rows_in": 2100,
+    "crm.updated_at.day_first_dates": 652,
+    "customers.duplicates_dropped": 100,
+    "pos.branch_code.normalised": 9809,
+    "pos.rows_in": 20000
+  },
+  "checks_passed": [
+    "customers: primary key unique, row count reconciles",
+    "accounts: primary key unique, row count reconciles",
+    "transactions: primary key unique, row count reconciles",
+    "branches: primary key unique, row count reconciles",
+    "complaints: primary key unique, row count reconciles",
+    "accounts.customer_id -> customers.customer_id: no orphans",
+    "transactions.customer_id -> customers.customer_id: no orphans",
+    "transactions.branch_code -> branches.branch_code: no orphans",
+    "complaints.customer_id -> customers.customer_id: no orphans"
+  ],
+  "fingerprint": "1b02739697fd524ed8c2098375d508d91c0f084b552be654a8bc16c3891e7d66",
+  "seconds": 0.67
+}

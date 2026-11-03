@@ -1,0 +1,62 @@
+{
+  "sources": [
+    {
+      "name": "crm",
+      "table": "customers",
+      "file": "crm_customers.csv",
+      "format": "csv",
+      "columns": {"CustKey": "customer_id", "Full Name": "name", "E-mail": "email",
+                  "Region": "region", "Last Updated": "updated_at"},
+      "kinds": {"customer_id": "cust", "name": "text", "email": "text",
+                "region": "text", "updated_at": "date"},
+      "primary_key": "customer_id",
+      "keep_latest_by": "updated_at"
+    },
+    {
+      "name": "core",
+      "table": "accounts",
+      "file": "core_accounts.csv",
+      "format": "csv",
+      "columns": {"acct_no": "account_no", "cust_ref": "customer_id",
+                  "bal": "balance_cents", "open_dt": "opened_on"},
+      "kinds": {"account_no": "acct", "customer_id": "cust",
+                "balance_cents": "money", "opened_on": "date"},
+      "primary_key": "account_no"
+    },
+    {
+      "name": "pos",
+      "table": "transactions",
+      "file": "txn.jsonl",
+      "format": "jsonl",
+      "columns": {"id": "txn_id", "customer": "customer_id", "amt_cents": "amount_cents",
+                  "ts": "txn_at", "branch": "branch_code"},
+      "kinds": {"txn_id": "int", "customer_id": "cust", "amount_cents": "int",
+                "txn_at": "epoch", "branch_code": "code"},
+      "primary_key": "txn_id"
+    },
+    {
+      "name": "branch",
+      "table": "branches",
+      "file": "branch_ref.csv",
+      "format": "csv",
+      "columns": {"Branch Code": "branch_code", "Market": "market"},
+      "kinds": {"branch_code": "code", "market": "text"},
+      "primary_key": "branch_code"
+    },
+    {
+      "name": "complaints",
+      "table": "complaints",
+      "file": "complaints.tsv",
+      "format": "tsv",
+      "columns": {"ticket": "ticket", "CustomerID": "customer_id", "Severity": "severity"},
+      "kinds": {"ticket": "text", "customer_id": "cust", "severity": "lower"},
+      "primary_key": "ticket"
+    }
+  ],
+  "foreign_keys": [
+    ["accounts", "customer_id", "customers", "customer_id"],
+    ["transactions", "customer_id", "customers", "customer_id"],
+    ["transactions", "branch_code", "branches", "branch_code"],
+    ["complaints", "customer_id", "customers", "customer_id"]
+  ]
+}
